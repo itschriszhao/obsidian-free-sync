@@ -21,14 +21,34 @@
 
 ---
 
-## 🎯 双轨设计
+## 🚦 选一条路径开始
 
-| 你是谁 | 怎么用 |
-|--------|--------|
-| 🧑‍💻 **普通用户** | 跟着下面的 README 一步步做，**不需要任何 AI 工具** |
-| 🤖 **AI agent 用户** | 让支持 Skills 协议的 AI 读 [`skill/SKILL.md`](skill/SKILL.md) 自动跑完全部步骤 |
+<table>
+<tr>
+<td width="50%" align="center">
 
-> 两条路径产出完全相同。没装 AI 工具？直接忽略 `skill/` 目录即可。
+### 🧑‍💻 手动配置
+
+跟着指南一步步做
+**不需要任何 AI 工具**
+
+👉 **[manual-setup.md](manual-setup.md)**
+
+</td>
+<td width="50%" align="center">
+
+### 🤖 AI 自动配置
+
+让支持 Skills 协议的 AI agent
+自动跑完所有步骤
+
+👉 **[skill/SKILL.md](skill/SKILL.md)**
+
+</td>
+</tr>
+</table>
+
+> 两条路径产出完全相同。没装 AI 工具？直接走左边即可。
 
 ---
 
@@ -36,9 +56,9 @@
 
 你也许遇到过这些问题：
 
-- 💸 **官方 Sync 太贵**：标准版 1GB / 5MB 单文件、Plus 版 10GB / 200MB，按月订阅，不能买断
+- 💸 **官方 Sync 太贵**：标准版 1GB / 5MB 单文件，Plus 版 10GB / 200MB，按月订阅，不能买断
 - 🌍 **国内同步龟速**：官方服务器在海外，写一段笔记等半天
-- 🍎 **iCloud 跨 Apple ID 直接失效**：工作 Mac 用公司 ID，个人 Mac 用自己 ID，两边笔记彼此隔离
+- 🍎 **iCloud 跨 Apple ID 直接失效**：工作 Mac 和个人 Mac 用不同 Apple ID，两边笔记彼此隔离
 - 🔒 **数据放别人家不放心**：容量满即停同步，账号封了笔记就没了
 
 这套方案的解法很简单：**笔记放你自己的 GitHub 私有仓库里，谁都拿不走。**
@@ -71,155 +91,32 @@
 
 ---
 
-## 🚀 开始配置
-
-### 🖥️ 第一台 Mac
-
-<details open>
-<summary><b>展开 7 个步骤</b></summary>
-
-#### 1️⃣ 安装 Git
-
-macOS 自带方式可能被公司网络屏蔽，直接下载安装包更稳：
-
-👉 [git-scm.com/download/mac](https://git-scm.com/download/mac)
-
-```bash
-git --version    # 验证安装
-```
-
-#### 2️⃣ 配置 Git 身份
-
-```bash
-git config --global user.name  "你的名字"
-git config --global user.email "你的邮箱"
-git config --global core.editor "true"   # 防止弹出 vim
-```
-
-#### 3️⃣ 生成 SSH Key 并添加到 GitHub
-
-```bash
-ssh-keygen -t ed25519 -C "你的邮箱"
-# 提示输入密码时直接回车跳过
-
-cat ~/.ssh/id_ed25519.pub   # 复制输出
-```
-
-打开 [github.com/settings/ssh/new](https://github.com/settings/ssh/new)，粘贴公钥，Key type 选 **Authentication Key**。
-
-```bash
-ssh -T git@github.com
-# 看到 "Hi 用户名! You've successfully authenticated..." 即成功
-```
-
-#### 4️⃣ 在 GitHub 新建私有仓库
-
-新建 **Private** 仓库，**不勾选任何初始化选项**，记下 SSH 地址：
-`git@github.com:用户名/仓库名.git`
-
-#### 5️⃣ 推送 vault
-
-```bash
-cd /path/to/your/vault
-git init
-git add .
-git commit -m "init"
-git remote add origin git@github.com:用户名/仓库名.git
-git branch -M main
-git push -u origin main
-```
-
-#### 6️⃣ 防止 workspace 冲突
-
-`workspace.json` 是界面状态，两台 Mac 各改各的会冲突，把它从追踪移除：
-
-```bash
-git rm --cached .obsidian/workspace.json
-git rm --cached .obsidian/workspace-mobile.json 2>/dev/null || true
-git commit -m "stop tracking workspace files"
-git push
-```
-
-确保 `.gitignore` 包含：
+## 📁 仓库结构
 
 ```
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
-.trash/
+obsidian-free-sync/
+├── README.md             # 你正在看的入口
+├── manual-setup.md       # 手动配置完整指南（人类视角）
+├── skill/
+│   └── SKILL.md          # AI agent 自动化指令（Skills 协议）
+├── docs/
+│   ├── plugin-config.md  # obsidian-git 插件配置参考
+│   └── troubleshooting.md # 9 类常见问题与排错（手动 + AI 共用）
+└── LICENSE
 ```
-
-#### 7️⃣ 安装 obsidian-git 插件
-
-Obsidian → 设置 → 第三方插件 → 关闭安全模式 → 搜索 **obsidian-git**（作者 Vinzent）→ 安装并启用。
-
-推荐配置：
-
-| 配置项 | 推荐值 |
-|--------|--------|
-| Auto commit-and-sync interval | `10`（分钟） |
-| Auto pull interval | `10`（分钟） |
-| Commit message | `vault backup: {{date}}` |
-| Pull on startup | ✅ 开启 |
-
-**完成。第一台 Mac 就绪 🎉**
-
-</details>
 
 ---
 
-### 💻 第二台 Mac
+## 🆘 遇到问题？
 
-重复 1-3 步（装 Git、配身份、**生成新的 SSH Key** 并加到 GitHub），然后：
+直接查 [`docs/troubleshooting.md`](docs/troubleshooting.md)，覆盖：
 
-```bash
-git clone git@github.com:用户名/仓库名.git ~/path/to/vault
-```
+- Git 安装失败 / GitHub 登录密码错误 / SSH Key 配置问题
+- 公司网络屏蔽 / SSH 22 端口被封（走 443）
+- push 被拒绝 / vim 卡住 / workspace.json 冲突
+- 换电脑 / 设备清理
 
-用 Obsidian 打开这个目录，装 obsidian-git 插件，配置同上。
-**两台 Mac 共享同一个 vault，每 10 分钟自动同步。**
-
----
-
-## 🤖 AI 一键配置（可选）
-
-如果你在用支持 Skills 协议的 AI agent（Claude Code 等），可以让 AI 自动跑完上面 7 步：
-
-```bash
-git clone git@github.com:itschriszhao/obsidian-free-sync.git ~/obsidian-free-sync
-ln -sfn ~/obsidian-free-sync/skill ~/.your-agent/skills/obsidian-free-sync
-```
-
-然后对 AI 说一句"帮我配置 obsidian 同步"，剩下的它会自己搞定。详见 [`skill/SKILL.md`](skill/SKILL.md)。
-
-> 不用 AI agent 的同学请直接忽略本节。
-
----
-
-## 🔄 换设备 / 离职清理
-
-两步清得干干净净：
-
-```bash
-# 1. GitHub → Settings → SSH and GPG keys → 删掉这台设备的 Key
-# 2. 删掉本地私钥
-rm ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
-```
-
-这台电脑和你 GitHub 账号彻底脱钩，其他设备同步不受影响。
-
----
-
-## 🆘 常见问题
-
-详见 [references/troubleshooting.md](references/troubleshooting.md)。
-
-包含：
-- 推送失败（non-fast-forward）
-- Permission denied (publickey)
-- 公司网络屏蔽 GitHub / Apple
-- SSH 22 端口被封（走 443）
-- workspace.json 冲突
-- ……
+或欢迎提 Issue。
 
 ---
 
@@ -227,7 +124,7 @@ rm ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
 
 好用的工具应该为效率服务，不应该有诸多限制——它本就该丝滑流畅。
 
-这套方案完全免费、完全开源、数据完全在你手里。觉得有用就 ⭐ 一下，遇到问题欢迎提 Issue。
+这套方案完全免费、完全开源、数据完全在你手里。觉得有用就 ⭐ 一下。
 
 <div align="center">
 
