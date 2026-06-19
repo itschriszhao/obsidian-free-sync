@@ -4,6 +4,12 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green) ![Platform](https://img.shields.io/badge/platform-macOS-lightgrey) ![Obsidian](https://img.shields.io/badge/Obsidian-1.x-7c3aed) ![Comate Skill](https://img.shields.io/badge/Comate-Skill-blue)
 
+> **双轨设计**：本仓提供两种使用方式，按需选用。
+> - 🧑‍💻 **手动配置**：跟着下面的 README 一步步做，不需要任何 AI 工具，普通用户首选。
+> - 🤖 **AI 一键配置**：装了 [Comate](https://comate.baidu.com/) / Claude Code 等支持 Skills 协议的 agent，可让 AI 自动跑完全部步骤，详见 [`skill/SKILL.md`](skill/SKILL.md)。
+>
+> 两条路径产出完全相同。没装 AI 工具？直接忽略 `skill/` 目录即可。
+
 ## 目录
 
 - [为什么做这个？](#为什么做这个)
