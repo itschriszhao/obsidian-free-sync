@@ -11,13 +11,15 @@
 
 ### 1️⃣ 安装 Git
 
-macOS 自带方式可能被公司网络屏蔽，直接下载安装包更稳：
-
-👉 [git-scm.com/download/mac](https://git-scm.com/download/mac)
+大多数 Mac 自带 `git`，先验证：
 
 ```bash
-git --version    # 验证安装
+git --version
 ```
+
+若提示 `command not found` 或版本过旧，直接下载官方安装包：
+
+👉 [git-scm.com/download/mac](https://git-scm.com/download/mac)
 
 ### 2️⃣ 配置 Git 身份
 
@@ -121,4 +123,4 @@ git clone git@github.com:用户名/仓库名.git ~/path/to/vault
 rm ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
 ```
 
-详见 [`docs/troubleshooting.md` 第 9 节](docs/troubleshooting.md#9-换电脑--设备清理)。
+详见 [`docs/troubleshooting.md` 第 6 节](docs/troubleshooting.md#6-换电脑--设备清理)。

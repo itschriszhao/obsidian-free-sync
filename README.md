@@ -111,10 +111,10 @@ obsidian-free-sync/
 
 直接查 [`docs/troubleshooting.md`](docs/troubleshooting.md)，覆盖：
 
-- Git 安装失败 / GitHub 登录密码错误 / SSH Key 配置问题
-- 公司网络屏蔽 / SSH 22 端口被封（走 443）
+- GitHub 登录密码错误 / Permission denied (publickey)
 - push 被拒绝 / vim 卡住 / workspace.json 冲突
 - 换电脑 / 设备清理
+- Git 安装 / 受限网络下的 GitHub 访问
 
 或欢迎提 Issue。
 

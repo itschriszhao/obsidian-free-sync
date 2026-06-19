@@ -4,34 +4,15 @@
 
 ---
 
-## 1. Git 安装失败（Apple 服务器被屏蔽）
-
-**现象**：弹窗提示"无法从软件更新服务器获得"
-
-**解决**：直接下载安装包绕过 Apple 服务器：
-
-- 下载地址：[git-scm.com/download/mac](https://git-scm.com/download/mac)
-- 安装时若提示"无法验证开发者"：系统设置 → 隐私与安全性 → 点"仍要打开"
-
----
-
-## 2. GitHub 登录提示密码错误
+## 1. GitHub 登录提示密码错误
 
 **原因**：GitHub 自 2021 年起不再支持密码认证，必须用 SSH Key 或 Personal Access Token。
 
-**解决**：按 [手动配置 Step 3](manual-setup.md#3️⃣-生成-ssh-key-并添加到-github) 配置 SSH Key。
+**解决**：按 [手动配置 Step 3](../manual-setup.md#3️⃣-生成-ssh-key-并添加到-github) 配置 SSH Key。
 
 ---
 
-## 3. SSH Key 无法添加到 GitHub（公司网络屏蔽）
-
-**现象**：GitHub Settings 页面打不开。
-
-**解决**：切换到手机流量打开 [github.com/settings/ssh/new](https://github.com/settings/ssh/new) 完成公钥添加。
-
----
-
-## 4. git push 提示 Permission denied (publickey)
+## 2. git push 提示 Permission denied (publickey)
 
 **原因**：SSH Key 未正确添加到 GitHub，或本地私钥路径不对。
 
@@ -51,29 +32,7 @@ ssh -T git@github.com
 
 ---
 
-## 5. SSH 连接超时（22 端口被封）
-
-**现象**：`ssh -T git@github.com` 长时间无响应或 `Connection timed out`。
-
-**测试 443 端口**：
-
-```bash
-ssh -T -p 443 git@ssh.github.com
-```
-
-**若 443 通，永久切到 443**：
-
-```bash
-cat >> ~/.ssh/config << 'EOF'
-Host github.com
-  Hostname ssh.github.com
-  Port 443
-EOF
-```
-
----
-
-## 6. git push 被拒绝（rejected / non-fast-forward）
+## 3. git push 被拒绝（rejected / non-fast-forward）
 
 **现象**：`rejected ... non-fast-forward` 或 `Updates were rejected`。
 
@@ -86,7 +45,7 @@ git push -u origin main
 
 ---
 
-## 7. 弹出 vim 编辑器卡住
+## 4. 弹出 vim 编辑器卡住
 
 **原因**：`git pull` / `git merge` 触发 merge commit 编辑。
 
@@ -105,7 +64,7 @@ git pull origin main --allow-unrelated-histories --no-edit
 
 ---
 
-## 8. obsidian-git 提示 workspace.json 冲突
+## 5. obsidian-git 提示 workspace.json 冲突
 
 **原因**：两台 Mac 各自修改了界面状态文件，Git 不知道用哪个版本。
 
@@ -124,7 +83,7 @@ git push
 
 ---
 
-## 9. 换电脑 / 设备清理
+## 6. 换电脑 / 设备清理
 
 两步清得干干净净，互不影响其他设备：
 
@@ -134,4 +93,45 @@ git push
 rm ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
 ```
 
-完成后，这台电脑与你的 GitHub 账号彻底脱钩，其他设备同步不受影响。
+完成后，这台电脑与你的 GitHub 账号彻底脱钩。
+
+---
+
+## 7. Git 命令不存在或版本过旧
+
+**现象**：`git --version` 提示 `command not found`，或版本太老想升级。
+
+**解决**：直接下载官方安装包：
+
+- 下载地址：[git-scm.com/download/mac](https://git-scm.com/download/mac)
+- 安装时若提示"无法验证开发者"：系统设置 → 隐私与安全性 → 点"仍要打开"
+
+---
+
+## 8. GitHub 网络访问异常（特殊网络环境）
+
+> 仅在受限网络环境下可能遇到，普通家庭网 / 一般公司网正常情况无需关注本节。
+
+### 8.1 GitHub 网页打不开（无法添加 SSH Key）
+
+切到手机流量打开 [github.com/settings/ssh/new](https://github.com/settings/ssh/new) 完成公钥添加。
+
+### 8.2 SSH 22 端口被封（连接超时）
+
+**现象**：`ssh -T git@github.com` 长时间无响应或 `Connection timed out`。
+
+**测试 443 端口**：
+
+```bash
+ssh -T -p 443 git@ssh.github.com
+```
+
+**若 443 通，永久切到 443**：
+
+```bash
+cat >> ~/.ssh/config << 'EOF'
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+EOF
+```
